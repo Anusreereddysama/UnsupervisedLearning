@@ -58,7 +58,7 @@ st.markdown("""
 def load_model():
     """Load the trained Decision Tree model"""
     try:
-        model = joblib.load("dt_model.pkl")
+        model = joblib.load("hierarchical_clustering/dt_model.pkl")
         return model
     except FileNotFoundError:
         st.error("Model file not found. Please train the model first.")
@@ -69,7 +69,7 @@ def load_model():
 def load_data():
     """Load the original customer data"""
     try:
-        df = pd.read_csv("Mall_Customers.csv")
+        df = df = pd.read_csv("hierarchical_clustering/Mall_Customers.csv")
         return df
     except FileNotFoundError:
         st.error("Data file not found.")
@@ -264,7 +264,7 @@ if model is not None and df is not None:
         
         with viz_col1:
             # 3D scatter plot showing the prediction
-            clustered_df = pd.read_csv("clustered_mall_customers_hc.csv")
+            clustered_data = pd.read_csv("hierarchical_clustering/clustered_mall_customers_hc.csv")
             
             # Inverse transform to original scale for visualization
             original_scaled = clustered_df[['Age', 'AnnualIncome', 'Spending Score']].copy()
