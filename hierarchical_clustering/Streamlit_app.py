@@ -243,7 +243,7 @@ if model is not None and df is not None:
             st.markdown("### 💡 Cluster Insights")
             
             # Calculate cluster statistics from original data
-            clustered_data = pd.read_csv("clustered_mall_customers_hc.csv")
+            clustered_data = pd.read_csv("hierarchical_clustering/clustered_mall_customers_hc.csv")
             cluster_stats = clustered_data[clustered_data['Cluester'] == cluster]
             
             st.markdown(f"""
@@ -264,7 +264,7 @@ if model is not None and df is not None:
         
         with viz_col1:
             # 3D scatter plot showing the prediction
-            clustered_data = pd.read_csv("hierarchical_clustering/clustered_mall_customers_hc.csv")
+            clustered_df = pd.read_csv("hierarchical_clustering/clustered_mall_customers_hc.csv")
             
             # Inverse transform to original scale for visualization
             original_scaled = clustered_df[['Age', 'AnnualIncome', 'Spending Score']].copy()
