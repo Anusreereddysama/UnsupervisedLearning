@@ -58,7 +58,7 @@ st.markdown("""
 def load_model():
     """Load the trained Decision Tree model"""
     try:
-        model = joblib.load("knnhc_model.pkl")
+        model = joblib.load("dt_model.pkl")
         return model
     except FileNotFoundError:
         st.error("Model file not found. Please train the model first.")
@@ -243,15 +243,15 @@ if model is not None and df is not None:
             st.markdown("### 💡 Cluster Insights")
             
             # Calculate cluster statistics from original data
-            clustered_data = pd.read_csv("clustered_mall_customers.csv")
-            cluster_stats = clustered_data[clustered_data['Cluster'] == cluster]
+            clustered_data = pd.read_csv("clustered_mall_customers_hc.csv")
+            cluster_stats = clustered_data[clustered_data['Cluester'] == cluster]
             
             st.markdown(f"""
                 <div class="cluster-info">
-                    <p><strong>Size:</strong> {len(cluster_stats)} customers ({len(cluster_stats)/len(clustered_data)*100:.1f}%)</p>
-                    <p><strong>Avg Age:</strong> {df[df.index.isin(cluster_stats.index)]['Age'].mean():.1f} years</p>
-                    <p><strong>Avg Income:</strong> ${df[df.index.isin(cluster_stats.index)]['Annual Income (k$)'].mean():.1f}k</p>
-                    <p><strong>Avg Spending:</strong> {df[df.index.isin(cluster_stats.index)]['Spending Score (1-100)'].mean():.1f}/100</p>
+                    <p style="color:black"><strong>Size:</strong> {len(cluster_stats)} customers ({len(cluster_stats)/len(clustered_data)*100:.1f}%)</p>
+                    <p style="color:black"><strong>Avg Age:</strong> {df[df.index.isin(cluster_stats.index)]['Age'].mean():.1f} years</p>
+                    <p style="color:black"><strong>Avg Income:</strong> ${df[df.index.isin(cluster_stats.index)]['Annual Income (k$)'].mean():.1f}k</p>
+                    <p style="color:black"><strong>Avg Spending:</strong> {df[df.index.isin(cluster_stats.index)]['Spending Score (1-100)'].mean():.1f}/100</p>
                 </div>
             """, unsafe_allow_html=True)
         
@@ -264,17 +264,17 @@ if model is not None and df is not None:
         
         with viz_col1:
             # 3D scatter plot showing the prediction
-            clustered_df = pd.read_csv("clustered_mall_customers.csv")
+            clustered_df = pd.read_csv("clustered_mall_customers_hc.csv")
             
             # Inverse transform to original scale for visualization
-            original_scaled = clustered_df[['Age', 'Annual Income (k$)', 'Spending Score (1-100)']].copy()
+            original_scaled = clustered_df[['Age', 'AnnualIncome', 'Spending Score']].copy()
             original_unscaled = scaler.inverse_transform(original_scaled)
             
             fig = px.scatter_3d(
                 x=original_unscaled[:, 0],
                 y=original_unscaled[:, 1],
                 z=original_unscaled[:, 2],
-                color=clustered_df['Cluster'].astype(str),
+                color=clustered_df['Cluester'].astype(str),
                 labels={'x': 'Age', 'y': 'Annual Income (k$)', 'z': 'Spending Score'},
                 title='3D Cluster Distribution',
                 color_discrete_sequence=px.colors.qualitative.Plotly
@@ -294,7 +294,7 @@ if model is not None and df is not None:
         
         with viz_col2:
             # Cluster distribution pie chart
-            cluster_counts = clustered_df['Cluster'].value_counts().sort_index()
+            cluster_counts = clustered_df['Cluester'].value_counts().sort_index()
             colors_list = [CLUSTER_INFO[i]['color'] for i in cluster_counts.index]
             
             fig_pie = go.Figure(data=[go.Pie(
