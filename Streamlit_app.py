@@ -248,10 +248,10 @@ if model is not None and df is not None:
             
             st.markdown(f"""
                 <div class="cluster-info">
-                    <p "color:black"><strong>Size:</strong> {len(cluster_stats)} customers ({len(cluster_stats)/len(clustered_data)*100:.1f}%)</p>
-                    <p"color:black"><strong>Avg Age:</strong> {df[df.index.isin(cluster_stats.index)]['Age'].mean():.1f} years</p>
-                    <p"color:black"><strong>Avg Income:</strong> ${df[df.index.isin(cluster_stats.index)]['Annual Income (k$)'].mean():.1f}k</p>
-                    <p"color:black"><strong>Avg Spending:</strong> {df[df.index.isin(cluster_stats.index)]['Spending Score (1-100)'].mean():.1f}/100</p>
+                    <p style ="color:black"><strong>Size:</strong> {len(cluster_stats)} customers ({len(cluster_stats)/len(clustered_data)*100:.1f}%)</p>
+                    <p style ="color:black"><strong>Avg Age:</strong> {df[df.index.isin(cluster_stats.index)]['Age'].mean():.1f} years</p>
+                    <p style ="color:black"><strong>Avg Income:</strong> ${df[df.index.isin(cluster_stats.index)]['Annual Income (k$)'].mean():.1f}k</p>
+                    <p style ="color:black"><strong>Avg Spending:</strong> {df[df.index.isin(cluster_stats.index)]['Spending Score (1-100)'].mean():.1f}/100</p>
                 </div>
             """, unsafe_allow_html=True)
         
